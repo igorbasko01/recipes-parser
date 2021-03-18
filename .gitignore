@@ -1,2 +1,6 @@
 settings.json
 youtube-fetch.curl
+
+.idea/
+venv/
+**/__pycache__/**
