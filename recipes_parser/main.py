@@ -9,5 +9,8 @@ if __name__ == '__main__':
 
     logging.info(f"Reading the following settings file {settings_path}")
     config_parer = ConfigReader(settings_path)
-    youtube_downloader = YoutubeDownloader(config_parer.settings['google-api-key'])
-    youtube_downloader.fetch_videos_of_channel(config_parer.settings['youtube-channel'])
+    youtube_downloader = YoutubeDownloader(
+        config_parer.google_api_key,
+        config_parer.channel_output_path
+    )
+    youtube_downloader.prepare_channel_results(config_parer.youtube_channel)
