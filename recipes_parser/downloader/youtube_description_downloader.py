@@ -10,13 +10,20 @@ class YoutubeDownloader(object):
         self.api_key = api_key
         self.output_path = output_path
 
-    def fetch_videos_of_channel(self, channel_id):
+    def fetch_videos_of_channel(self, channel_id, next_page=None):
         logging.info(f"fetching videos of the following channel id: {channel_id}")
-        res = requests.get(f'https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&channelId={channel_id}&key={self.api_key}')
+        url = f'https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&channelId={channel_id}&key={self.api_key}'
+        if next_page:
+            logging.info(f'Next page is {next_page}')
+            url += f'&pageToken={next_page}'
+        res = requests.get(url)
         response = res.json()
         logging.info(f"Got the following response: {response}")
-        self.save_response_to_file(response, f"response-{channel_id}.json")
+        self.save_response_to_file(response, f"response-{channel_id}-{next_page}.json")
         self.extract_video_ids(response)
+        next_page = response['nextPageToken'] if 'nextPageToken' in response else None
+        if next_page:
+            self.fetch_videos_of_channel(channel_id, next_page)
 
     def extract_video_ids(self, response):
         logging.info('Extracting video ids')

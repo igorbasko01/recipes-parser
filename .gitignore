@@ -4,3 +4,4 @@ youtube-fetch.curl
 .idea/
 venv/
 **/__pycache__/**
+descriptions/
