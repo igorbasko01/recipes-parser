@@ -13,4 +13,4 @@ if __name__ == '__main__':
         config_parer.google_api_key,
         config_parer.channel_output_path
     )
-    youtube_downloader.fetch_videos_of_channel(config_parer.youtube_channel)
+    youtube_downloader.prepare_channel_results(config_parer.youtube_channel)
