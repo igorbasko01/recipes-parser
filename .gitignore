@@ -5,3 +5,4 @@ youtube-fetch.curl
 venv/
 **/__pycache__/**
 channel/
+videos/
