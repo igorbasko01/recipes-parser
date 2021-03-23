@@ -13,7 +13,7 @@ class YoutubeDownloader(object):
         self.videos_output_path = videos_output_path
 
     def prepare_video_results(self):
-        paths = self.get_channel_files()
+        paths = fops.get_files_of_path(self.channel_output_path)
         logging.info(f'got the following channel files: {paths}')
         # flatten
         video_ids = [self.extract_video_ids(fops.read_json_file(path)) for path in paths]
@@ -63,7 +63,3 @@ class YoutubeDownloader(object):
         ]
         logging.info(f"found {len(videos)} videos")
         return videos
-
-    def get_channel_files(self):
-        dirpath, _, filenames = next(os.walk(self.channel_output_path))
-        return [os.path.join(dirpath, f) for f in filenames]

@@ -1,5 +1,6 @@
 import logging
 import json
+import os
 
 
 def save_json_to_file(data, filename):
@@ -13,3 +14,8 @@ def read_json_file(path):
     with open(path, 'r') as f:
         res = json.load(f)
     return res
+
+
+def get_files_of_path(path):
+    dirpath, _, filenames = next(os.walk(path))
+    return [os.path.join(dirpath, f) for f in filenames]
