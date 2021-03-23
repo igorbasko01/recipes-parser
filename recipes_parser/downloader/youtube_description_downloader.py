@@ -43,7 +43,7 @@ class YoutubeDownloader(object):
 
     def get_response_of_channel(self, channel_id, next_page=None):
         logging.info(f"fetching videos of the following channel id: {channel_id}")
-        url = f'https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&channelId={channel_id}&key={self.api_key}'
+        url = f'https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&type=video&channelId={channel_id}&key={self.api_key}'
         if next_page:
             logging.info(f'Next page is {next_page}')
             url += f'&pageToken={next_page}'
