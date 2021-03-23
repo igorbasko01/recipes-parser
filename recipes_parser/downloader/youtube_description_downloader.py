@@ -1,7 +1,8 @@
 import logging
 import requests
-import json
 import os
+
+import recipes_parser.utils.file_ops as fops
 
 
 class YoutubeDownloader(object):
@@ -15,18 +16,18 @@ class YoutubeDownloader(object):
         paths = self.get_channel_files()
         logging.info(f'got the following channel files: {paths}')
         # flatten
-        video_ids = [self.extract_video_ids(self.read_response_file(path)) for path in paths]
+        video_ids = [self.extract_video_ids(fops.read_json_file(path)) for path in paths]
         logging.info(f'Found {sum([len(chunk) for chunk in video_ids])} video ids: {video_ids}')
         for chunk in video_ids:
             if len(chunk) > 0:
                 response = self.get_response_of_videos(chunk)
-                self.save_response_to_file(response, os.path.join(self.videos_output_path, f'videos-{chunk[0]}.json'))
+                fops.save_json_to_file(response, os.path.join(self.videos_output_path, f'videos-{chunk[0]}.json'))
 
     def prepare_channel_results(self, channel_id):
         next_page = None
         while True:
             response, next_page = self.get_response_of_channel(channel_id, next_page)
-            self.save_response_to_file(
+            fops.save_json_to_file(
                 response,
                 os.path.join(self.channel_output_path, f'response-{channel_id}-{next_page}.json')
             )
@@ -63,17 +64,6 @@ class YoutubeDownloader(object):
         logging.info(f"found {len(videos)} videos")
         return videos
 
-    def save_response_to_file(self, response, filename):
-        logging.info(f"Saving response to file {filename}")
-        with open(filename, 'w') as f:
-            json.dump(response, f, indent=4)
-
     def get_channel_files(self):
         dirpath, _, filenames = next(os.walk(self.channel_output_path))
         return [os.path.join(dirpath, f) for f in filenames]
-
-    def read_response_file(self, path):
-        logging.info(f'Reading the following response file {path}')
-        with open(path, 'r') as f:
-            res = json.load(f)
-        return res

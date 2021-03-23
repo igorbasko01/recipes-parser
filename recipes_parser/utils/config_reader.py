@@ -9,3 +9,4 @@ class ConfigReader(object):
             self.youtube_channel = self.settings['youtube-channel']
             self.channel_output_path = self.settings['channel-output-path']
             self.videos_output_path = self.settings['videos-output-path']
+            self.ingredients_section_output_path = self.settings['ingredients-section-output-path']
