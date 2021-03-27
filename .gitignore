@@ -7,3 +7,4 @@ venv/
 channel/
 videos/
 ingredients-section.json
+predicted-ingredients.json
