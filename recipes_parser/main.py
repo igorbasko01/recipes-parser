@@ -21,6 +21,9 @@ if __name__ == '__main__':
 
     ingredients_parser = IngredientsParser(
         config_parser.videos_output_path,
-        config_parser.ingredients_section_output_path
+        config_parser.ingredients_section_output_path,
+        config_parser.ingredient_parser_container_name,
+        config_parser.crf_model_path_in_container,
+        config_parser.predicted_ingredients_output_path
     )
     ingredients_parser.run()

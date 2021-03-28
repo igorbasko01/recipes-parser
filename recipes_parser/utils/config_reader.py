@@ -10,3 +10,6 @@ class ConfigReader(object):
             self.channel_output_path = self.settings['channel-output-path']
             self.videos_output_path = self.settings['videos-output-path']
             self.ingredients_section_output_path = self.settings['ingredients-section-output-path']
+            self.ingredient_parser_container_name = self.settings['ingredient-parser-container-name']
+            self.crf_model_path_in_container = self.settings['crf-model-path-in-container']
+            self.predicted_ingredients_output_path = self.settings['predicted-ingredients-output-path']
