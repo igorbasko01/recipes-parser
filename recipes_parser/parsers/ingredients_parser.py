@@ -1,6 +1,5 @@
 import recipes_parser.utils.file_ops as fops
 import itertools
-import re
 import logging
 import subprocess
 import json
@@ -54,10 +53,10 @@ class IngredientsParser(object):
 
     def extract_ingredients_section_from_text(self, text):
         prefix = 'ingredients:'
-        suffix = 'directions:'
+        suffix = '\n\n'
         lower_case_text = text.lower()
         sections = lower_case_text.split(prefix)[1:]
-        results = [section.split(suffix)[0] for section in sections]
+        results = [section.lstrip().split(suffix)[0].replace('\r', '\n') for section in sections]
         return results
 
     def predict_ingredients(self, video):
