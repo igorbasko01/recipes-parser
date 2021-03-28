@@ -9,8 +9,8 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
 
     args = ArgumentsParser(
-        youtube_downloader_name=YoutubeDownloader.__name__,
-        ingredients_parser_name=IngredientsParser.__name__
+        extract_name=YoutubeDownloader.__name__,
+        transform_name=IngredientsParser.__name__
     ).args
 
     logging.info(f"Reading the following settings file {args.settings_path}")
