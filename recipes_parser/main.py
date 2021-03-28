@@ -11,13 +11,13 @@ if __name__ == '__main__':
     logging.info(f"Reading the following settings file {settings_path}")
     config_parser = ConfigReader(settings_path)
 
-    youtube_downloader = YoutubeDownloader(
-        config_parser.google_api_key,
-        config_parser.channel_output_path,
-        config_parser.videos_output_path
-    )
-    youtube_downloader.prepare_channel_results(config_parser.youtube_channel)
-    youtube_downloader.prepare_video_results()
+    # youtube_downloader = YoutubeDownloader(
+    #     config_parser.google_api_key,
+    #     config_parser.channel_output_path,
+    #     config_parser.videos_output_path
+    # )
+    # youtube_downloader.prepare_channel_results(config_parser.youtube_channel)
+    # youtube_downloader.prepare_video_results()
 
     ingredients_parser = IngredientsParser(
         config_parser.videos_output_path,

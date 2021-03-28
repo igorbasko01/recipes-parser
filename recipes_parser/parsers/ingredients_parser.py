@@ -55,17 +55,13 @@ class IngredientsParser(object):
     def extract_ingredients_section_from_text(self, text):
         prefix = 'ingredients:'
         suffix = 'directions:'
-        p = re.compile(f'{prefix}.*{suffix}', re.IGNORECASE | re.MULTILINE | re.DOTALL)
-        regex_result = p.search(text)
-        result = None
-        if regex_result:
-            extracted_string = regex_result.group()
-            result = extracted_string[len(prefix):len(extracted_string)-len(suffix)]
-        return result
+        lower_case_text = text.lower()
+        sections = lower_case_text.split(prefix)[1:]
+        results = [section.split(suffix)[0] for section in sections]
+        return results
 
     def predict_ingredients(self, video):
         logging.info(f"Predicting ingredients of video: {video}")
-        echo_command = f'echo "{video["ingredients"]}" | bin/parse-ingredients.py --model-file {self.crf_model_path}'
 
         predicted_video = {
             'id': video['id'],
@@ -73,11 +69,16 @@ class IngredientsParser(object):
             'ingredients': video['ingredients']
         }
 
-        try:
-            output = subprocess.check_output(
-                ['docker', 'exec', self.container_name, '/bin/bash', '-c', echo_command]).decode('utf8')
-            predicted_video['predicted_ingredients'] = json.loads(output)
-        except subprocess.CalledProcessError:
-            predicted_video['predicted_ingredients'] = None
+        predicted_ingredients = []
+        for section in video['ingredients']:
+            echo_command = f'echo "{section}" | bin/parse-ingredients.py --model-file {self.crf_model_path}'
+            try:
+                output = subprocess.check_output(
+                    ['docker', 'exec', self.container_name, '/bin/bash', '-c', echo_command]).decode('utf8')
+                predicted_ingredients.append(json.loads(output))
+            except subprocess.CalledProcessError:
+                predicted_video['predicted_ingredients'] = None
+
+        predicted_video['predicted_ingredients'] = predicted_ingredients
 
         return predicted_video
