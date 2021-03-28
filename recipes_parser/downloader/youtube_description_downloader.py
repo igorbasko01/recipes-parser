@@ -7,10 +7,15 @@ import recipes_parser.utils.file_ops as fops
 
 class YoutubeDownloader(object):
 
-    def __init__(self, api_key, channel_output_path, videos_output_path):
+    def __init__(self, api_key, youtube_channel, channel_output_path, videos_output_path):
         self.api_key = api_key
+        self.youtube_channel = youtube_channel
         self.channel_output_path = channel_output_path
         self.videos_output_path = videos_output_path
+
+    def run(self):
+        self.prepare_channel_results(self.youtube_channel)
+        self.prepare_video_results()
 
     def prepare_video_results(self):
         paths = fops.get_files_of_path(self.channel_output_path)
