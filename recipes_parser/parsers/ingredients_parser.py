@@ -70,7 +70,8 @@ class IngredientsParser(object):
 
         predicted_ingredients = []
         for section in video['ingredients']:
-            echo_command = f'echo "{section}" | bin/parse-ingredients.py --model-file {self.crf_model_path}'
+            safe_section = section.encode("ascii", errors='ignore').decode()
+            echo_command = f'echo "{safe_section}" | bin/parse-ingredients.py --model-file {self.crf_model_path}'
             try:
                 output = subprocess.check_output(
                     ['docker', 'exec', self.container_name, '/bin/bash', '-c', echo_command]).decode('utf8')
