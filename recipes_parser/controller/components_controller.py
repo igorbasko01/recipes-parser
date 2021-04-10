@@ -3,15 +3,17 @@ from typing import List
 
 from recipes_parser.downloader.youtube_description_downloader import YoutubeDownloader
 from recipes_parser.parsers.ingredients_parser import IngredientsParser
+from recipes_parser.loaders.recipes_loader import RecipesLoader
 
 
 class ComponentsController(object):
     def __init__(self, config, components_to_run: List[str] = None):
-        self.default_components_to_run = [YoutubeDownloader.__name__, IngredientsParser.__name__]
+        self.default_components_to_run = \
+            [YoutubeDownloader.__name__, IngredientsParser.__name__, RecipesLoader.__name__]
         self.config = config
         self.components_to_run = components_to_run if components_to_run else self.default_components_to_run
-        self.youtube_downloader, self.ingredients_parser = self._create_components()
-        self.execution_order = [self.youtube_downloader, self.ingredients_parser]
+        self.youtube_downloader, self.ingredients_parser, self.recipes_loader = self._create_components()
+        self.execution_order = [self.youtube_downloader, self.ingredients_parser, self.recipes_loader]
 
     def run(self):
         for component in self.execution_order:
@@ -35,4 +37,6 @@ class ComponentsController(object):
             self.config.predicted_ingredients_output_path
         )
 
-        return youtube_downloader, ingredients_parser
+        recipes_loader = RecipesLoader()
+
+        return youtube_downloader, ingredients_parser, recipes_loader
