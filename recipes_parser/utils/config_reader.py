@@ -13,3 +13,4 @@ class ConfigReader(object):
             self.ingredient_parser_container_name = self.settings['ingredient-parser-container-name']
             self.crf_model_path_in_container = self.settings['crf-model-path-in-container']
             self.predicted_ingredients_output_path = self.settings['predicted-ingredients-output-path']
+            self.neo4j = self.settings['neo4j']
