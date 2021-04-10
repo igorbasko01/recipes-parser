@@ -4,6 +4,7 @@ from typing import List
 from recipes_parser.downloader.youtube_description_downloader import YoutubeDownloader
 from recipes_parser.parsers.ingredients_parser import IngredientsParser
 from recipes_parser.loaders.recipes_loader import RecipesLoader
+from recipes_parser.repository.neo4j_repo import Neo4jRepository
 
 
 class ComponentsController(object):
@@ -37,6 +38,8 @@ class ComponentsController(object):
             self.config.predicted_ingredients_output_path
         )
 
-        recipes_loader = RecipesLoader()
+        neo4j_repo = Neo4jRepository(self.config.neo4j)
+
+        recipes_loader = RecipesLoader(self.config.predicted_ingredients_output_path, neo4j_repo)
 
         return youtube_downloader, ingredients_parser, recipes_loader
