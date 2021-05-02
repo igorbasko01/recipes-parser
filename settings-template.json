@@ -1,0 +1,15 @@
+{
+  "google-api-key": "",
+  "youtube-channel": "UC5PH7ZmLciZZS5vX5HPusUw",
+  "channel-output-path": "./channel",
+  "videos-output-path": "./videos",
+  "ingredients-section-output-path": "./ingredients-section.json",
+  "ingredient-parser-container-name": "ingredient-phrase-tagger-model-builder",
+  "crf-model-path-in-container": "/20210326_1724-nyt-ingredients-snapshot-2015-49381ad.crfmodel",
+  "predicted-ingredients-output-path": "./predicted-ingredients.json",
+  "neo4j": {
+    "url": "bolt://localhost:7687",
+    "user": "neo4j",
+    "password": ""
+  }
+}
