@@ -1,6 +1,5 @@
 from neo4j import GraphDatabase
-from typing import List, Dict
-from dataclasses import asdict
+from typing import List
 from recipes_parser.model.recipe import Recipe
 from recipes_parser.model.ingredient import Ingredient
 
