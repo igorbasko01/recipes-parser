@@ -3,6 +3,8 @@ import pytest
 from datetime import datetime as dt
 
 from recipes_parser.downloader.model.short_desc_video import ShortDescVideo
+from recipes_parser.metrics.model.metrics import MetricDate, MetricLong
+from recipes_parser.metrics.channel_metrics import ChannelMetrics
 
 
 class TestChannelMetrics:
